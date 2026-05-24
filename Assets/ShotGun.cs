@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class Shotgun : MonoBehaviour
+{
+    public GameObject bulletPrefab;   // ShotGunBullet prefabını buraya sürükle
+    public Transform firePoint;       // Merminin çıkacağı namlu ucu noktası
+
+    public int pelletCount = 6;       // Tek seferde atılacak mermi (saçma) sayısı
+    public float spreadAngle = 15f;   // Saçılma açısı (Genişlik)
+    public float fireRate = 0.8f;     // Ateş etme sıklığı
+    private float nextFireTime = 0f;
+
+    void Update()
+    {
+        // Sol tık basıldığında ve ateş etme süresi geldiyse
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextFireTime)
+        {
+            Shoot();
+            nextFireTime = Time.time + fireRate;
+        }
+    }
+
+    void Shoot()
+    {
+        for (int i = 0; i < pelletCount; i++)
+        {
+            // Namlunun mevcut açısını alıyoruz
+            float currentRotation = firePoint.rotation.eulerAngles.z;
+
+            // Belirlediğin spreadAngle dahilinde rastgele bir sapma açısı hesaplıyoruz
+            float randomSpread = Random.Range(-spreadAngle, spreadAngle);
+
+            // Yeni açıyı mermiye uyguluyoruz
+            Quaternion pelletRotation = Quaternion.Euler(0, 0, currentRotation + randomSpread);
+
+            // Mermiyi oluştur
+            Instantiate(bulletPrefab, firePoint.position, pelletRotation);
+        }
+    }
+}
+
