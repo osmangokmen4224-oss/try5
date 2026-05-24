@@ -1,19 +1,27 @@
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour
+public class ShotGun
 {
-    public GameObject bulletPrefab;   // ShotGunBullet prefabını buraya sürükle
-    public Transform firePoint;       // Merminin çıkacağı namlu ucu noktası
+    using UnityEngine;
 
-    public int pelletCount = 6;       // Tek seferde atılacak mermi (saçma) sayısı
-    public float spreadAngle = 15f;   // Saçılma açısı (Genişlik)
-    public float fireRate = 0.8f;     // Ateş etme sıklığı
+public class ShotGun : MonoBehaviour
+{
+    [Header("Mermi Ayarları")]
+    public GameObject bulletPrefab;   // Mermi objeni buraya sürükle
+    public Transform firePoint;       // Merminin çıkacağı namlu ucu
+
+    [Header("Atış Özellikleri")]
+    public int pelletCount = 6;       // Saçma sayısı
+    public float spreadAngle = 10f;   // Saçılma açısı
+    public float fireRate = 0.8f;     // Ateş hızı (sn cinsinden)
+    public float bulletSpeed = 15f;   // Mermi hızı
+    
     private float nextFireTime = 0f;
 
     void Update()
     {
-        // Sol tık basıldığında ve ateş etme süresi geldiyse
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextFireTime)
+        // E tuşuna basıldığında ve süre dolduğunda ateş et
+        if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextFireTime)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
@@ -22,21 +30,23 @@ public class Shotgun : MonoBehaviour
 
     void Shoot()
     {
+        if (bulletPrefab == null || firePoint == null) return;
+
         for (int i = 0; i < pelletCount; i++)
         {
-            // Namlunun mevcut açısını alıyoruz
-            float currentRotation = firePoint.rotation.eulerAngles.z;
-
-            // Belirlediğin spreadAngle dahilinde rastgele bir sapma açısı hesaplıyoruz
+            // Namlunun açısına göre rastgele sapma hesapla
             float randomSpread = Random.Range(-spreadAngle, spreadAngle);
-
-            // Yeni açıyı mermiye uyguluyoruz
-            Quaternion pelletRotation = Quaternion.Euler(0, 0, currentRotation + randomSpread);
+            Quaternion pelletRotation = firePoint.rotation * Quaternion.Euler(0, 0, randomSpread);
 
             // Mermiyi oluştur
-            Instantiate(bulletPrefab, firePoint.position, pelletRotation);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, pelletRotation);
+
+            // Mermiyi ileri fırlat
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = bullet.transform.right * bulletSpeed;
+            }
         }
     }
 }
-
-osman babanın siki bnüyük
