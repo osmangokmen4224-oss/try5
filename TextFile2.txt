@@ -39,4 +39,8 @@ public class Shotgun : MonoBehaviour
     }
 }
 
-osman babanın siki bnüyük
+
+
+
+
+
