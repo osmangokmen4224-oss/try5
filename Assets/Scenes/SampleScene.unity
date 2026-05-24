@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db68ede7f0768ee49af62f655974f4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player
-  bullet: {fileID: 1727842398126989723, guid: deed51cbe26fd2946895d9c41e40e26d, type: 3}
+  moveSpeed: 8
 --- !u!90 &518974665
 Avatar:
   m_ObjectHideFlags: 0
@@ -749,12 +749,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000061017, y: -0.00000012861, z: -10}
-  m_LocalScale: {x: 6.3820825, y: 1.654314, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1603414687}
+  m_Father: {fileID: 619394802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &565727537
 GameObject:
@@ -928,7 +928,8 @@ Transform:
   m_LocalPosition: {x: -11.42, y: 3.35, z: -2.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -18.076, z: 0}
 --- !u!1 &700527693
@@ -1213,37 +1214,6 @@ MonoBehaviour:
   spawnPoint: {fileID: 738006920}
   minSure: 1
   maxSure: 2
---- !u!1 &1158744208
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1158744209}
-  m_Layer: 0
-  m_Name: ShotGun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1158744209
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158744208}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.55, y: 1.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160015713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,6 +1487,8 @@ GameObject:
   - component: {fileID: 1603414682}
   - component: {fileID: 1603414681}
   - component: {fileID: 1603414688}
+  - component: {fileID: 1603414690}
+  - component: {fileID: 1603414689}
   m_Layer: 3
   m_Name: player
   m_TagString: Player
@@ -1548,7 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db68ede7f0768ee49af62f655974f4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::player
-  bullet: {fileID: 1727842398126989723, guid: deed51cbe26fd2946895d9c41e40e26d, type: 3}
+  moveSpeed: 8
 --- !u!61 &1603414683
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1716,7 +1688,6 @@ Transform:
   m_LocalScale: {x: 0.3907424, y: 0.4634368, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 519420032}
   - {fileID: 1032847816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1733,6 +1704,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   can: 5
+--- !u!114 &1603414689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603414680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce51fa025b1b6147a372e07f524b095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShotgunBullet
+  "h\u0131z": 25
+  hasar: 5
+--- !u!114 &1603414690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603414680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4023175f2c0ab0c46847f350a522cb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShotGun
+  bulletPrefab: {fileID: 5384207213087376170, guid: 840f77e43dbac2d418479444d8c7142a, type: 3}
+  firePoint: {fileID: 1032847816}
+  bulletSpeed: 15
+  pelletCount: 6
+  spreadAngle: 15
+  fireRate: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1747,4 +1750,3 @@ SceneRoots:
   - {fileID: 565727539}
   - {fileID: 1113966424}
   - {fileID: 700527695}
-  - {fileID: 1158744209}

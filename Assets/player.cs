@@ -4,44 +4,29 @@ public class player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private float horizontalInput;
-    private float moveSpeed = 8f;
-    public GameObject bullet;
+    public float moveSpeed = 8f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        // Karakterin fiziksel darbelerle sağa sola yalpalamasını engelle
+        if (rb != null)
+        {
+            rb.freezeRotation = true;
+        }
     }
 
     void Update()
     {
+        // Klavyeden A-D veya Yön tuşlarını temizce alır (Basmıyorsan 0 olur)
         horizontalInput = Input.GetAxisRaw("Horizontal");
-
-      
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-           
-            Vector2 Vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-           
-            Transform firePoint = this.gameObject.transform.Find("FirePoint");
-
-            if (firePoint != null && bullet != null)
-            {
-               
-                GameObject EdilenMermi = Instantiate(bullet, firePoint.position, firePoint.rotation);
-
-               
-                EdilenMermi.GetComponent<bullet>().Vec = Vec;
-            }
-            else
-            {
-                Debug.LogError("FirePoint objesi veya bullet prefab'i eksik!");
-            }
-        }
     }
 
     void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+        // Hızı horizontalInput ile çarptık! 
+        // Tuşa basmıyorsan horizontalInput 0 olacağı için karakter zınk diye duracak.
+        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
     }
 }
